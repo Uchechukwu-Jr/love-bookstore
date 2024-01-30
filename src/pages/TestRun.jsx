@@ -1,5 +1,5 @@
 import { getBooks } from "../utils/api";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useLoaderData, Link } from "react-router-dom";
 
 export async function loader() {
   return await getBooks(15);
@@ -7,7 +7,6 @@ export async function loader() {
 
 const Home = () => {
   const data = useLoaderData();
-  const navigate = useNavigate();
   return (
     <div>
       <h1>Home Books</h1>
@@ -16,12 +15,6 @@ const Home = () => {
           <li key={index}>{book.name}</li>
         ))}
       </ul>
-      <br />
-      <br />
-      <br />
-      <button className="btn btn-primary" onClick={() => navigate("/page/1")}>
-        see all books
-      </button>
     </div>
   );
 };

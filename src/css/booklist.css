@@ -1,0 +1,58 @@
+.grid-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid-container div {
+  width: 100%;
+  background-color: white;
+  padding: 8px 2px;
+  border-radius: 10px;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  flex-direction: column;
+  min-height: 300px;
+  transition: transform 0.3s;
+}
+
+.dark .grid-container div {
+  background-color: black;
+  box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2),
+    0 6px 20px 0 rgba(255, 255, 255, 0.19);
+}
+
+.grid-container div:hover {
+  transform: scale(0.95);
+}
+
+.book-list-img {
+  width: 60%;
+  margin: auto;
+}
+
+@media screen and (min-width: 640px) {
+  .grid-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media screen and (min-width: 768px) {
+  .grid-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media screen and (min-width: 1024px) {
+  .grid-container {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+@media screen and (min-width: 1280px) {
+  .grid-container {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}

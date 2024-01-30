@@ -1,27 +1,76 @@
-import axios from "axios";
+export async function getBlog(id) {
+  // Replace this URL with your actual API endpoint
+  const url = `http://localhost:3000/blogs/${id}`;
 
-export function fetchProducts() {
-  return axios
-    .get("http://localhost:3000/products")
-    .then((response) => response.data)
-    .catch((error) => {
-      console.error(error.message);
-    });
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (response.ok) {
+      return data;
+    } else {
+      throw new Error(`Error fetching blog: ${data.message}`);
+    }
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+/*export async function getBooks(limit) {
+  const apiUrl = limit
+    ? `http://localhost:3000/api/books?limit=${limit}`
+    : "http://localhost:3000/api/books";
+
+  try {
+    const response = await fetch(apiUrl);
+    const data = await response.json();
+
+    if (response.ok) {
+      return data;
+    } else {
+      throw new Error(`Error fetching books: ${data.message}`);
+    }
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}*/
+export async function getBooks(limit) {
+  const apiUrl = limit
+    ? `http://localhost:3000/api/books?limit=${limit}`
+    : "http://localhost:3000/api/books";
+
+  try {
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+
+    const response = await fetch(apiUrl);
+    const data = await response.json();
+
+    if (response.ok) {
+      return data;
+    } else {
+      throw new Error(`Error fetching books: ${data.message}`);
+    }
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 }
 
-export function fetchProductById(productId) {
-  if (!productId) {
-    throw new Error("Invalid product ID");
-  }
+export async function getEmails() {
+  const url = `http://localhost:3000/api/emails`;
 
-  return axios
-    .get(`http://localhost:3000/product/${productId}`)
-    .then((response) => response.data)
-    .catch((error) => {
-      console.error(
-        `Error fetching product with ID ${productId}:`,
-        error.message
-      );
-      // Handle error in your preferred way (e.g., return null, throw)
-    });
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (response.ok) {
+      return data;
+    } else {
+      throw new Error(`Error fetching blog: ${data.message}`);
+    }
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 }

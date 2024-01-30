@@ -75,7 +75,7 @@ const Header = ({ openMobileMenu, setOpenMobileMenu }) => {
   return (
     <div className="w-full z-10 fixed top-0 bg-slate-50 text-black dark:bg-slate-950 dark:text-white border-b-slate-600 border-b-2">
       <div className="flex justify-between mx-auto w-[90%] px-2 py-3">
-        <div className="flex items-center">
+        <div className="flex items-center dark:text-white ">
           <button
             onClick={() => setOpenMobileMenu(!openMobileMenu)}
             className="z-20 w-8 h-8 leading-10 mr-4 text-3xl md:hidden rounded-full m-1"
@@ -92,7 +92,17 @@ const Header = ({ openMobileMenu, setOpenMobileMenu }) => {
             </Link>
           </h1>
         </div>
-        <div className="duration-100 dark:bg-slate-800 bg-gray-200 rounded">
+        <button
+          style={{ borderBottomLeftRadius: "20px" }}
+          className={`dark:text-white  text-2xl bg-slate-50 dark:bg-slate-950 ${
+            path == "/search" ? "hidden" : null
+          }`}
+        >
+          <Link to="search">
+            <ion-icon name="search"></ion-icon>
+          </Link>
+        </button>
+        <div className="duration-100 dark:text-white  dark:bg-slate-800 bg-gray-200 rounded">
           {options?.map((opt) => (
             <button
               key={opt.text}
@@ -107,16 +117,6 @@ const Header = ({ openMobileMenu, setOpenMobileMenu }) => {
           ))}
         </div>
       </div>
-      <button
-        style={{ borderBottomLeftRadius: "20px" }}
-        className={`absolute right-0 py-2 px-3 text-4xl bg-slate-50 dark:bg-slate-950 ${
-          path == "/search" ? "hidden" : null
-        }`}
-      >
-        <Link to="search">
-          <ion-icon name="search"></ion-icon>
-        </Link>
-      </button>
     </div>
   );
 };

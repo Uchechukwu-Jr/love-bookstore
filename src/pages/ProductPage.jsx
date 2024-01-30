@@ -14,7 +14,7 @@ const ProductPage = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/products${path}`
+          `http://localhost:3000/api/books${path}`
         );
 
         setProduct(response.data);

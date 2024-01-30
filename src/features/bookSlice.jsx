@@ -1,12 +1,12 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const bookSlice = createSlice({
-  name: 'book',
+  name: "book",
   initialState: {
     totalBooks: 0,
     totalPages: 0,
-    currentPages: 0,
-    pageSize: 0,
+    currentPages: 1,
+    pageSize: 5,
     books: [],
   },
   reducers: {

@@ -1,15 +1,17 @@
-/* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setSearchTerm } from "../features/searchTermSlice";
+import { setSearchResults } from "../features/searchResultsSlice";
 import { Link } from "react-router-dom";
+import "../css/booklist.css";
+import { setLoading } from "../features/loadingSlice";
+import { setError } from "../features/errorSlice";
+const Search = () => {
+  const dispatch = useDispatch();
+  const searchTerm = useSelector((state) => state.searchTerm);
+  const searchResults = useSelector((state) => state.searchResults);
+  const loading = useSelector((state) => state.loading);
+  const error = useSelector((state) => state.error);
 
-const Search = ({
-  searchTerm,
-  setSearchTerm,
-  searchResults,
-  setSearchResults,
-}) => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
   const holder = {
     display: "grid",
     gridGap: "5px",
@@ -23,45 +25,53 @@ const Search = ({
     minHeight: "150px",
   };
 
-  const handleSearch = async (event) => {
-    event.preventDefault();
+  const handleSearch = async () => {
+    if (searchTerm === "") {
+      dispatch(setSearchResults([]));
+      return;
+    }
 
     try {
-      setLoading(true);
-      setError(null);
+      dispatch(setLoading(true));
+      dispatch(setError(null));
 
       const response = await fetch(
-        `http://localhost:3000/search?q=${searchTerm}`
+        `http://localhost:3000/api/search?q=${encodeURIComponent(searchTerm)}`
       );
       const data = await response.json();
 
       if ("message" in data) {
-        // If the response contains a message, it means no results were found
-        setError(data.message);
-        setSearchResults([]); // Clear previous search results
+        dispatch(setSearchResults([]));
+        dispatch(setError(data.message));
       } else {
-        setSearchResults(data);
+        dispatch(setSearchResults(data));
       }
     } catch (error) {
-      setError("Error fetching search results");
-      setSearchResults([]); // Clear previous search results
+      dispatch(setError("Error fetching search results"));
+      dispatch(setSearchResults([]));
     } finally {
-      setLoading(false);
+      dispatch(setLoading(false));
     }
   };
 
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    handleSearch();
+  };
+
+  const handleInputChange = (e) => {
+    dispatch(setSearchTerm(e.target.value));
+  };
+
   return (
-    <section>
+    <section className="text-center">
+      <Link className="font-bold" to="..">
+        <ion-icon name="arrow-back-sharp"></ion-icon> Go Back
+      </Link>
       <form
         className="w-full flex flex-col mx-auto rounded-md p-3"
-        onSubmit={handleSearch}
+        onSubmit={handleFormSubmit}
       >
-        <label
-          htmlFor="search"
-          style={{ position: "absolute", left: "-9999px" }}
-        >
-          Search
-        </label>
         <input
           type="search"
           name="search"
@@ -70,7 +80,7 @@ const Search = ({
           placeholder="Enter Book name"
           className="searchBar text-black w-full py-[12px] px-[20px] my-[8px] mx-[0] inline-block border border-black rounded"
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={handleInputChange}
         />
         <button
           type="submit"
@@ -80,12 +90,13 @@ const Search = ({
           {loading ? "Loading..." : "Search"}
         </button>
       </form>
+
       {searchResults.length > 0 && (
         <section>
           <button
             onClick={() => {
-              setSearchTerm("");
-              setSearchResults([]);
+              dispatch(setSearchTerm(""));
+              dispatch(setSearchResults([]));
             }}
           >
             clear results
@@ -96,33 +107,21 @@ const Search = ({
         {error && <p>Error: {error}</p>}
       </section>
       <section className="text-center">
-        <section className="text-center">
-          {searchTerm && searchResults.length === 0 && !error && (
-            <p>No results found for {searchTerm}</p>
-          )}
-        </section>
         {searchTerm.length === 0 && !error && <p>Search Books</p>}
       </section>
-      {/* Display search results */}
       {searchResults.length > 0 && (
         <div>
-          <h2>Search Results</h2>
-          <div style={holder}>
+          <h2>
+            Search Results{" "}
+            <span className="font-bold text-2xl">{`"${searchTerm}"`}</span>
+          </h2>
+          <div className="container mt-5">
             {searchResults.map((result) => (
-              <div key={result.id} style={holderDiv} className=" text-left">
+              <div key={result.id} className="my-3">
                 <Link to={`/${result.id}`}>
-                  <div
-                    style={{
-                      minWidth: "100px",
-                      minHeight: "100px",
-                      backgroundImage: `url('${result.imageUrl}')`,
-                    }}
-                  ></div>
-                  <h1 className=" text-base font-bold">{result.name}</h1>
-                  <p className=" text-xm">{result.category}</p>
-                  <p className=" text-xm">{result.status}</p>
-                  <p className=" text-xm">{result.size}</p>
-                  <p className=" text-xm font-bold">{result.price}</p>
+                  <h3 className=" text-xl">
+                    {result.name} by {result.author}
+                  </h3>
                 </Link>
               </div>
             ))}
