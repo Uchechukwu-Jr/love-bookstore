@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Pagination } from "react-bootstrap";
@@ -78,7 +79,9 @@ const BookList = () => {
               />
               <h3>{book.name}</h3>
               <p>{book.author}</p>
-              <button className="btn btn-primary">Get this book</button>
+              <button className="buy btn btn-primary text-nowrap">
+                Get this book
+              </button>
             </Link>
           </div>
         ))}

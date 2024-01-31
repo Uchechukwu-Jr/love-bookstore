@@ -16,7 +16,7 @@ export async function getBlog(id) {
     return null;
   }
 }
-/*export async function getBooks(limit) {
+export async function getBooks(limit) {
   const apiUrl = limit
     ? `http://localhost:3000/api/books?limit=${limit}`
     : "http://localhost:3000/api/books";
@@ -34,15 +34,11 @@ export async function getBlog(id) {
     console.error(error);
     return null;
   }
-}*/
-export async function getBooks(limit) {
-  const apiUrl = limit
-    ? `http://localhost:3000/api/books?limit=${limit}`
-    : "http://localhost:3000/api/books";
+}
+export async function getGenres() {
+  const apiUrl = "http://localhost:3000/api/genres";
 
   try {
-    await new Promise((resolve) => setTimeout(resolve, 3000));
-
     const response = await fetch(apiUrl);
     const data = await response.json();
 
