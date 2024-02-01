@@ -77,7 +77,7 @@ const Search = () => {
           name="search"
           id="search"
           required
-          placeholder="Enter Book name"
+          placeholder="Books, Authors, ISBN...."
           className="searchBar text-black w-full py-[12px] px-[20px] my-[8px] mx-[0] inline-block border border-black rounded"
           value={searchTerm}
           onChange={handleInputChange}

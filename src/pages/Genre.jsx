@@ -6,7 +6,7 @@ export function loader() {
   return getBooks();
 }
 
-const Category = () => {
+const Genre = () => {
   const books = useLoaderData();
   const navigate = useNavigate();
   const location = useLocation();
@@ -44,4 +44,4 @@ const Category = () => {
   );
 };
 
-export default Category;
+export default Genre;
