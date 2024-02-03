@@ -12,19 +12,6 @@ const Search = () => {
   const loading = useSelector((state) => state.loading);
   const error = useSelector((state) => state.error);
 
-  const holder = {
-    display: "grid",
-    gridGap: "5px",
-    gridTemplateColumns: "repeat(auto-fill, minmax(100px, 1fr))",
-    justifyItems: "center",
-    gridAutoFlow: "dense",
-    justifyContent: "center",
-  };
-  const holderDiv = {
-    minWidth: "100px",
-    minHeight: "150px",
-  };
-
   const handleSearch = async () => {
     if (searchTerm === "") {
       dispatch(setSearchResults([]));

@@ -3,13 +3,9 @@
   height: 100vh;
   position: fixed;
   display: flex;
-  background-color: rgb(255, 255, 255);
   justify-content: center;
   opacity: 0.9;
   z-index: 9999999999;
-}
-.dark .loader-container {
-  background-color: rgb(20, 19, 19);
 }
 
 .loader {

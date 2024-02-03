@@ -2,9 +2,10 @@
 import { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Pagination } from "react-bootstrap";
-import { useParams, useNavigate, useLoaderData, Link } from "react-router-dom";
+import { useParams, useNavigate, useLoaderData } from "react-router-dom";
 import { getBooks } from "../utils/api";
 import "../css/booklist.css";
+import BookCard from "./BookCard";
 
 export function loader() {
   return getBooks();
@@ -20,13 +21,6 @@ const BookList = () => {
   const firstIndex = lastIndex - recordsPerPage;
   const records = data.slice(firstIndex, lastIndex);
   const npage = Math.ceil(data.length / recordsPerPage);
-
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }, [currentPage]);
 
   useEffect(() => {
     const parsedPage = parseInt(page);
@@ -70,19 +64,7 @@ const BookList = () => {
       <div className="container grid-container">
         {records.map((book) => (
           <div key={book.id}>
-            <Link to={`/${book.id}`}>
-              <img
-                width={100}
-                className="book-list-img"
-                src={book.imageUrl}
-                alt={book.imageUrl}
-              />
-              <h3>{book.name}</h3>
-              <p>{book.author}</p>
-              <button className="buy btn btn-primary text-nowrap">
-                Get this book
-              </button>
-            </Link>
+            <BookCard book={book} />
           </div>
         ))}
       </div>

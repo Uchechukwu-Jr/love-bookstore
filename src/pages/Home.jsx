@@ -1,7 +1,8 @@
 /* eslint-disable react-refresh/only-export-components */
 import { getBooks } from "../utils/api";
-import { useLoaderData, useNavigate, Link } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import "../css/booklist.css";
+import BookCard from "../components/BookCard";
 
 export async function loader() {
   return await getBooks(20);
@@ -15,19 +16,7 @@ const Home = () => {
       <div className="container grid-container">
         {data.map((book) => (
           <div key={book.id}>
-            <Link to={`/${book.id}`}>
-              <img
-                width={100}
-                className="book-list-img"
-                src={book.imageUrl}
-                alt={book.imageUrl}
-              />
-              <h3>{book.name}</h3>
-              <p>{book.author}</p>
-              <button className="btn btn-primary text-nowrap">
-                Get this book
-              </button>
-            </Link>
+            <BookCard book={book} />
           </div>
         ))}
       </div>
