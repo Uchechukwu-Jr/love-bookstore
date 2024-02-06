@@ -15,19 +15,42 @@ import Genre from "./pages/Genre";
 import Author from "./pages/Author";
 import BookList, { loader as bookLstLoader } from "./components/BookList";
 import BookDetails from "./pages/BookDetails";
+import NotFound from "./pages/NotFound";
+import { ErrorBoundary } from "./components/ErrorBoundary";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<MainLayout />}>
-      <Route index element={<Home />} loader={homeLoader} />
-      <Route path="genres" element={<Genres />} loader={genresLoader} />
-      <Route path="authors" element={<Authors />} loader={authorsLoader} />
+      <Route
+        index
+        element={<Home />}
+        loader={homeLoader}
+        errorElement={<ErrorBoundary />}
+      />
+      <Route
+        path="genres"
+        element={<Genres />}
+        loader={genresLoader}
+        errorElement={<ErrorBoundary />}
+      />
+      <Route
+        path="authors"
+        element={<Authors />}
+        loader={authorsLoader}
+        errorElement={<ErrorBoundary />}
+      />
       <Route path="search" element={<Search />} />
       <Route path="help" element={<Help />} />
       <Route path="privacy-policy" element={<PrivacyPolicy />} />
-      <Route path="page/:page" loader={bookLstLoader} element={<BookList />} />
+      <Route
+        path="page/:page"
+        loader={bookLstLoader}
+        element={<BookList />}
+        errorElement={<ErrorBoundary />}
+      />
       <Route
         path="genres/:genre"
+        errorElement={<ErrorBoundary />}
         loader={({ params }) => {
           return fetch(
             `https://bookstore-o32m.onrender.com/api/genres/${params.genre}`
@@ -38,6 +61,7 @@ const router = createBrowserRouter(
       <Route
         path="authors/:author"
         element={<Author />}
+        errorElement={<ErrorBoundary />}
         loader={({ params }) => {
           return fetch(
             `https://bookstore-o32m.onrender.com/api/authors/${params.author}`
@@ -53,6 +77,7 @@ const router = createBrowserRouter(
           );
         }}
       />
+      <Route path="*" element={<NotFound />} />
     </Route>
   )
 );
