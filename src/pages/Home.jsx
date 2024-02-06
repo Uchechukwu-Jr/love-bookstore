@@ -3,9 +3,10 @@ import { getBooks } from "../utils/api";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import "../css/booklist.css";
 import BookCard from "../components/BookCard";
+import Carousel from "../components/Carousel";
 
 export async function loader() {
-  return await getBooks(20);
+  return await getBooks(30);
 }
 
 const Home = () => {
@@ -13,6 +14,7 @@ const Home = () => {
   const navigate = useNavigate();
   return (
     <div className="w-[100%] flex flex-col min-h-screen">
+      <Carousel />
       <div className="container grid-container">
         {data.map((book) => (
           <div key={book.id}>

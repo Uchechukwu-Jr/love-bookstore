@@ -29,7 +29,9 @@ const router = createBrowserRouter(
       <Route
         path="genres/:genre"
         loader={({ params }) => {
-          return fetch(` http://localhost:3000/api/genres/${params.genre}`);
+          return fetch(
+            `https://bookstore-o32m.onrender.com/api/genres/${params.genre}`
+          );
         }}
         element={<Genre />}
       />
@@ -37,14 +39,18 @@ const router = createBrowserRouter(
         path="authors/:author"
         element={<Author />}
         loader={({ params }) => {
-          return fetch(` http://localhost:3000/api/authors/${params.author}`);
+          return fetch(
+            `https://bookstore-o32m.onrender.com/api/authors/${params.author}`
+          );
         }}
       />
       <Route
         path=":bookId"
         element={<BookDetails />}
         loader={({ params }) => {
-          return fetch(`http://localhost:3000/api/books/${params.bookId}`);
+          return fetch(
+            `https://bookstore-o32m.onrender.com/api/books/${params.bookId}`
+          );
         }}
       />
     </Route>

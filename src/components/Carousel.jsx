@@ -1,70 +1,50 @@
-import React, { useState, useEffect } from "react";
-import { carouselItems } from "../assets/carouselItems";
+/* eslint-disable no-unused-vars */
+import { useState } from "react";
+import items from "../assets/carousel.json";
+import { LeftArrowIcon, RightArrowIcon } from "../assets/icons";
+import "../css/carousel.css";
+import { useNavigate } from "react-router-dom";
 
 const Carousel = () => {
+  const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [autoplay, setAutoplay] = useState(true);
 
   const handleNext = () => {
-    setCurrentIndex((currentIndex + 1) % carouselItems.length);
+    setCurrentIndex((currentIndex + 1) % items.length);
   };
 
   const handlePrevious = () => {
-    setCurrentIndex(
-      (currentIndex - 1 + carouselItems.length) % carouselItems.length
-    );
+    setCurrentIndex((currentIndex - 1 + items.length) % items.length);
   };
-
-  const startAutoplay = () => {
-    setAutoplay(true);
-  };
-
-  const stopAutoplay = () => {
-    setAutoplay(false);
-  };
-
-  useEffect(() => {
-    let intervalId;
-
-    if (autoplay) {
-      intervalId = setInterval(() => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % carouselItems.length);
-      }, 4000);
-    }
-
-    return () => clearInterval(intervalId);
-  }, [autoplay]);
 
   return (
-    <div
-      className="carousel w-[100%] min-h-[350px] max-h-[450px] bg-cover rounded-lg relative"
-      style={{
-        backgroundImage: `url('${carouselItems[currentIndex]?.imageUrl}')`,
-      }}
-    >
-      <button
-        className=" bg-slate-100 p-2 rounded-full flex justify-center text-center text-3xl absolute text-slate-500 left-0 bottom-2/4 font-bold"
-        onClick={handlePrevious}
+    <div className="main-carousel cursor-pointer relative protest-riot-regular mb-10 p-2">
+      <div
+        onClick={() => navigate(`/${items[currentIndex]?.id}`)}
+        className="flex justify-center items-center w-[100%] min-h-[250px]"
       >
-        <ion-icon name="arrow-back-sharp"></ion-icon>
+        <div className="w-[30%] flex justify-end">
+          <img
+            src={items[currentIndex]?.imageUrl}
+            className="w-[150px] h-full border rounded"
+          />
+        </div>
+        <div className="w-[70%] px-5">
+          <h1 className="text-3xl lg:text-5xl font-bold">
+            {items[currentIndex]?.name}
+          </h1>
+          <p className="italic">by</p>
+          <p className="text-xl lg:text-3xl font-bold">
+            {items[currentIndex]?.author}
+          </p>
+        </div>
+      </div>
+
+      <button onClick={handlePrevious} className="absolute left-0 bottom-[40%]">
+        <LeftArrowIcon />
       </button>
-      <button
-        className=" bg-slate-100 p-2 rounded-full flex justify-center text-center text-3xl absolute  text-slate-500 right-0 bottom-2/4 font-bold"
-        onClick={handleNext}
-      >
-        <ion-icon name="arrow-forward-sharp"></ion-icon>
-      </button>
-      <button
-        className=" bg-slate-100 mx-4 p-2 rounded-full flex justify-center text-center text-3xl absolute bottom-0 left-2/4 text-slate-500"
-        onClick={startAutoplay}
-      >
-        <ion-icon name="play-sharp"></ion-icon>
-      </button>
-      <button
-        className=" bg-slate-100 mx-4 p-2 rounded-full flex justify-center text-center text-3xl absolute bottom-0 right-2/4 text-slate-500"
-        onClick={stopAutoplay}
-      >
-        <ion-icon name="pause-sharp"></ion-icon>
+      <button onClick={handleNext} className="absolute right-0 bottom-[40%]">
+        <RightArrowIcon />
       </button>
     </div>
   );

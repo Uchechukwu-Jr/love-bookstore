@@ -23,7 +23,9 @@ const Search = () => {
       dispatch(setError(null));
 
       const response = await fetch(
-        `http://localhost:3000/api/search?q=${encodeURIComponent(searchTerm)}`
+        `https://bookstore-o32m.onrender.com/api/search?q=${encodeURIComponent(
+          searchTerm
+        )}`
       );
       const data = await response.json();
 

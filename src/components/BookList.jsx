@@ -16,7 +16,7 @@ const BookList = () => {
   const { page } = useParams();
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
-  const recordsPerPage = 10;
+  const recordsPerPage = 20;
   const lastIndex = currentPage * recordsPerPage;
   const firstIndex = lastIndex - recordsPerPage;
   const records = data.slice(firstIndex, lastIndex);
